@@ -1,0 +1,5 @@
+.git
+/pets
+.env
+/resources/__pycache__
+/venv
