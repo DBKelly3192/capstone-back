@@ -13,62 +13,74 @@ def register():
     payload['email'] = payload['email'].lower()
 
     try:
-        models.User.get(models.User.email== payload['email'])
+        models.User.get(models.User.username == payload['username'])
         return jsonify(
             data={},
-            message=f"The Email {payload['email']} already exists",
+            message=f"The username, {payload['username']}, already exists",
             status=401
         ), 401
-
     except models.DoesNotExist:
-        pw_hash = generate_password_hash(payload['password'])
-        created_user = models.User.create(
-            username=payload['username'],
-            email=payload['email'],
-            password=pw_hash
-        )
-        created_user_dict = model_to_dict(created_user)
-        print(created_user_dict)
-        login_user(created_user)
-        created_user_dict.pop('password')
+        try:
+            models.User.get(models.User.email == payload['email'])
+            return jsonify(
+                data={},
+                message=f"The email, {payload['email']}, already exists",
+                status=401
+            ), 401
+        except models.DoesNotExist:
+            pw_hash = generate_password_hash(payload['password'])
+            created_user = models.User.create(
+                username=payload['username'],
+                email=payload['email'],
+                password=pw_hash
+            )
+            created_user_dict = model_to_dict(created_user)
+            print(created_user_dict)
+            login_user(created_user)
+            created_user_dict.pop('password')
 
-        return jsonify(
-            data=created_user_dict,
-            message=f"Successfully registered user {created_user_dict['email']}",
-            status=201
-        ), 201
+            return jsonify(
+                data=created_user_dict,
+                message=f"Successfully registered user {created_user_dict['email']}",
+                status=201
+            ), 201
 
 @user.route('/login', methods=['POST'])
 def login():
     payload = request.get_json()
-    payload['email'] = payload['email'].lower()
+    payload['emailOrUsername'] = payload['emailOrUsername'].lower()
 
     try:
-        user = models.User.get(models.User.email == payload['email'])
-
-        user_dict = model_to_dict(user)
-        password_is_good = check_password_hash(user_dict['password'], payload['password'])
-
-        if(password_is_good):
-            login_user(user)
-            user_dict.pop('password')
-
-            return jsonify(
-                data=user_dict,
-                message=f"Successfully logged in {user_dict['email']}",
-                status=200
-            ), 200
-        else:
+        user = models.User.get(models.User.username == payload['emailOrUsername'])
+        return check_password(user, payload['password'])
+    except models.DoesNotExist:
+        try:
+            user = models.User.get(models.User.email == payload['emailOrUsername'])
+            return check_password(user, payload['password'])
+        except models.DoesNotExist:
             return jsonify(
                 data={},
-                message="Username or password is incorrect",
+                message="Email or password is incorrect",
                 status=401
             ), 401
 
-    except models.DoesNotExist:
+def check_password(user, password):
+    user_dict = model_to_dict(user)
+    password_is_good = check_password_hash(user_dict['password'], password)
+
+    if(password_is_good):
+        login_user(user)
+        user_dict.pop('password')
+
+        return jsonify(
+            data=user_dict,
+            message=f"Successfully logged in {user_dict['email']}",
+            status=200
+        ), 200
+    else:
         return jsonify(
             data={},
-            message="Email or password is incorrect",
+            message="Username or password is incorrect",
             status=401
         ), 401
 
