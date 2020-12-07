@@ -41,7 +41,7 @@ def register():
 
             return jsonify(
                 data=created_user_dict,
-                message=f"Successfully registered user {created_user_dict['email']}",
+                message=f"Successfully registered user {created_user_dict['username']}",
                 status=201
             ), 201
 
@@ -74,7 +74,7 @@ def check_password(user, password):
 
         return jsonify(
             data=user_dict,
-            message=f"Successfully logged in {user_dict['email']}",
+            message=f"Successfully logged in {user_dict['username']}",
             status=200
         ), 200
     else:

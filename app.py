@@ -12,6 +12,10 @@ DEBUG = True
 PORT = 8000
 
 app = Flask(__name__)
+app.config.update(
+  SESSION_COOKIE_SECURE=True,
+  SESSION_COOKIE_SAMESITE='None'
+)
 app.secret_key = "What happens in a meadow at dusk?"
 
 login_manager = LoginManager()

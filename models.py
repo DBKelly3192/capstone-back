@@ -14,16 +14,17 @@ class BaseModel(Model):
         database = DATABASE
 
 class User(BaseModel, UserMixin):
-    username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
+    photo = CharField(default='https://spee.ch/0/bcfdcd31-c004-42ed-a6f0-3d9cd67f134e.jpg')
+    username = CharField(unique = True)
 
 class Post(BaseModel):
-    who = ForeignKeyField(User, backref='posts')
-    what = CharField()
-    where = CharField()
-    when = CharField()
-    why = CharField()
+    activity = CharField()
+    description = CharField()
+    location = CharField()
+    time = DateTimeField(default=datetime.datetime.now)
+    user = ForeignKeyField(User, backref = 'posts')
 
 def initialize():
     DATABASE.connect()
