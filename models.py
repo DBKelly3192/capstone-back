@@ -4,10 +4,10 @@ from flask_login import UserMixin
 from peewee import *
 from playhouse.db_url import connect
 
-# if 'ON_HEROKU' in os.environ:
-#     DATABASE = connect(os.environ.get('DATABASE_URL'))
-# else:
-DATABASE = SqliteDatabase('happy_trails.sqlite')
+if 'ON_HEROKU' in os.environ:
+    DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+    DATABASE = SqliteDatabase('happy_trails.sqlite')
 
 class BaseModel(Model):
     class Meta:
