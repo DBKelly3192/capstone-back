@@ -28,8 +28,8 @@ def my_posts():
         print(f"LIST OF POSTS. { posts }")
 
         return jsonify(
-            data=posts,
-            status={ "code": 201, "message": "success" }
+            data = posts,
+            status = { "code": 201, "message": "success" }
         )
 
     except models.DoesNotExist:

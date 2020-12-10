@@ -16,7 +16,7 @@ def register():
         models.User.get(models.User.username == payload['username'])
         return jsonify(
             data={},
-            message=f"The username, {payload['username']}, already exists",
+            message=f"The username, { payload['username'] }, already exists. Please select a different username.",
             status=401
         ), 401
     except models.DoesNotExist:
@@ -24,7 +24,7 @@ def register():
             models.User.get(models.User.email == payload['email'])
             return jsonify(
                 data={},
-                message=f"The email, {payload['email']}, already exists",
+                message=f"The email, { payload['email'] }, is already associated with an account. Please select a different email.",
                 status=401
             ), 401
         except models.DoesNotExist:
@@ -36,12 +36,11 @@ def register():
             )
             created_user_dict = model_to_dict(created_user)
             print(created_user_dict)
-            login_user(created_user)
             created_user_dict.pop('password')
 
             return jsonify(
                 data=created_user_dict,
-                message=f"Successfully registered user {created_user_dict['username']}",
+                message=f"Successfully created user { created_user_dict['username'] }.",
                 status=201
             ), 201
 
@@ -60,7 +59,7 @@ def login():
         except models.DoesNotExist:
             return jsonify(
                 data={},
-                message="Email or password is incorrect",
+                message="Email or password is incorrect. Please try again.",
                 status=401
             ), 401
 
@@ -74,13 +73,13 @@ def check_password(user, password):
 
         return jsonify(
             data=user_dict,
-            message=f"Successfully logged in {user_dict['username']}",
+            message=f"Successfully logged in user {user_dict['username']}.",
             status=200
         ), 200
     else:
         return jsonify(
             data={},
-            message="Username or password is incorrect",
+            message="Username or password is incorrect. Please try again.",
             status=401
         ), 401
 
@@ -90,6 +89,6 @@ def logout():
     logout_user()
     return jsonify(
         data={},
-        message="successful logout",
+        message="Successfully logged out user.",
         status=200
     ), 200
