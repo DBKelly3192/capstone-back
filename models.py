@@ -14,7 +14,7 @@ class BaseModel(Model):
 
     class Meta:
         database = DATABASE
-
+ 
 class User(BaseModel, UserMixin):
     email = CharField(unique = True)
     emergencyEmail = CharField(default = '')
