@@ -14,7 +14,7 @@ class BaseModel(Model):
 
     class Meta:
         database = DATABASE
- 
+
 class User(BaseModel, UserMixin):
     email = CharField(unique = True)
     emergencyEmail = CharField(default = '')
@@ -30,7 +30,7 @@ class Post(BaseModel):
     location = CharField()
     user = ForeignKeyField(User, backref = 'posts')
 
-class SOS(BaseModel):
+class Sos(BaseModel):
     activity = CharField()
     description = CharField()
     finish = DateTimeField()
@@ -40,6 +40,6 @@ class SOS(BaseModel):
 
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User, Post, SOS], safe = True)
+    DATABASE.create_tables([User, Post, Sos], safe = True)
     print("TABLES CREATED")
     DATABASE.close()

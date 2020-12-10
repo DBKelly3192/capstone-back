@@ -5,7 +5,7 @@ from flask_mail import Mail, Message
 from playhouse.shortcuts import model_to_dict
 from resources.posts import post
 from resources.users import user
-from resources.sos import sos
+from resources.soss import sos
 import models
 import os
 

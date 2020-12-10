@@ -24,7 +24,7 @@ def my_soss():
 
 @sos.route('/<id>', methods = ["GET"])
 def one_sos(id):
-    sos = models.SOS.get_by_id(id)
+    sos = models.Sos.get_by_id(id)
     print(sos)
     return jsonify(
         data = model_to_dict(sos),
@@ -38,7 +38,7 @@ def create_sos():
         payload = request.get_json()
         print(f'This is the payload { payload }')
         print(f'This is the current_user { current_user } and this is the current_user { current_user.id }')
-        created_sos = models.SOS.create(
+        created_sos = models.Sos.create(
             activity = payload['activity'],
             description = payload['description'],
             finish = payload['finish'],
@@ -59,9 +59,9 @@ def create_sos():
 @sos.route('/<id>', methods = ["PUT"])
 def update_sos(id):
     payload = request.get_json()
-    query = models.SOS.update(**payload).where(models.SOS.id == id)
+    query = models.Sos.update(**payload).where(models.Sos.id == id)
     query.execute()
-    sos = model_to_dict(models.SOS.get_by_id(id))
+    sos = model_to_dict(models.Sos.get_by_id(id))
 
     return jsonify(
         data = sos,
@@ -70,7 +70,7 @@ def update_sos(id):
 
 @sos.route('/<id>', methods = ["DELETE"])
 def delete_sos(id):
-    delete_query = models.SOS.delete().where(models.SOS.id == id)
+    delete_query = models.Sos.delete().where(models.Sos.id == id)
     num_of_rows_deleted = delete_query.execute()
     return jsonify(
         data = {},
