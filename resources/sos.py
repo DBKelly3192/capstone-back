@@ -37,6 +37,7 @@ def create_sos():
     try:
         payload = request.get_json()
         print(f'This is the payload { payload }')
+        print(f'This is the current_user { current_user } and this is the current_user { current_user.id }')
         created_sos = models.SOS.create(
             activity = payload['activity'],
             description = payload['description'],
