@@ -33,8 +33,10 @@ def one_sos(id):
 
 @sos.route('/create', methods = ["POST"])
 def create_sos():
+    print('In the create route')
     try:
         payload = request.get_json()
+        print(f'This is the payload { payload }')
         created_sos = models.SOS.create(
             activity = payload['activity'],
             description = payload['description'],
@@ -43,7 +45,7 @@ def create_sos():
             start = payload['start'],
             user = current_user.id
         )
-        print(created_sos)
+        print(f'This is the created model { created_sos }')
         sos_dict = model_to_dict(created_sos)
 
         return jsonify(
