@@ -33,9 +33,9 @@ class Post(BaseModel):
 class Sos(BaseModel):
     activity = CharField()
     description = CharField()
-    finish = DateTimeField()
+    finish = CharField()
     location = CharField()
-    start = DateTimeField()
+    start = CharField()
     user = ForeignKeyField(User, backref = 'soss')
 
 def initialize():
