@@ -44,7 +44,7 @@ def create_sos():
             finish = payload['finish'],
             location = payload['location'],
             start = payload['start'],
-            user = current_user
+            user = current_user.id
         )
         print(f'This is the created model { created_sos }')
         sos_dict = model_to_dict(created_sos)
