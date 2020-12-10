@@ -39,12 +39,12 @@ def create_sos():
         print(f'This is the payload { payload }')
         print(f'This is the current_user { current_user } and this is the current_user { current_user.id }')
         created_sos = models.Sos.create(
-            activity = payload['activity'],
-            description = payload['description'],
-            finish = payload['finish'],
-            location = payload['location'],
-            start = payload['start'],
-            user = current_user.id
+            activity = "payload['activity']",
+            description = "payload['description']",
+            finish = "payload['finish']",
+            location = "payload['location']",
+            start = "payload['start']",
+            user = "current_user.id"
         )
         print(f'This is the created model { created_sos }')
         sos_dict = model_to_dict(created_sos)
