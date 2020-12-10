@@ -43,7 +43,7 @@ def create_sos():
             start = payload['start'],
             user = current_user.id
         )
-
+        print(created_sos)
         sos_dict = model_to_dict(created_sos)
 
         return jsonify(
