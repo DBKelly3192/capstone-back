@@ -51,7 +51,8 @@ mail = Mail(app)
 @app.route('/email/<id>')
 def index(id):
     soss = [model_to_dict(sos) for sos in current_user.soss]
-    print(soss[int(id)-1])msg = Message(
+    print(soss[int(id)-1])
+    msg = Message(
         f"{ current_user.first } { current_user.last } wanted you let you know they're hitting the trail!",
         recipients = [f"{ current_user.emergencyEmail }"]
     )
