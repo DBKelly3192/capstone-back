@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_login import current_user, login_required, LoginManager
 from flask_mail import Mail, Message
 from playhouse.shortcuts import model_to_dict
-# from resources.emails import email
 from resources.posts import post
 from resources.soss import sos
 from resources.users import user
@@ -42,8 +41,7 @@ def load_user(user_id):
     except models.DoesNotExist:
         return None
 
-# CORS(email, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
-CORS(app, origins=['*'], supports_credentials = True)
+CORS(app, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
 CORS(post, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
 CORS(sos, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
 CORS(user, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
@@ -51,7 +49,6 @@ CORS(user, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp
 mail = Mail(app)
 
 @app.route('/email/<id>')
-# @cross_origin()
 def index(id):
     soss = [model_to_dict(sos) for sos in current_user.soss]
     print(soss[int(id)-1])
@@ -70,7 +67,6 @@ def index(id):
         status={ "code": 201, "message": "success" }
     )
 
-# app.register_blueprint(email, url_prefix='/posts')
 app.register_blueprint(post, url_prefix='/posts')
 app.register_blueprint(sos, url_prefix='/sos')
 app.register_blueprint(user, url_prefix='/users')
