@@ -31,14 +31,16 @@ class User(BaseModel, UserMixin):
 class Post(BaseModel):
     activity = CharField()
     description = CharField()
-    location = CharField()
+    lat = CharField()
+    lng = CharField()
     user = ForeignKeyField(User, backref = 'posts')
 
 class Sos(BaseModel):
     activity = CharField()
     description = CharField()
     finish = CharField()
-    location = CharField()
+    lat = CharField()
+    lng = CharField()
     start = CharField()
     user = ForeignKeyField(User, backref = 'soss')
 

@@ -36,17 +36,15 @@ def create_sos():
     print('In the create route')
     try:
         payload = request.get_json()
-        print(f'This is the payload { payload }')
-        print(f'This is the current_user { current_user } and this is the current_user { current_user.id }')
         created_sos = models.Sos.create(
             activity = payload['activity'],
             description = payload['description'],
             finish = payload['finish'],
-            location = payload['location'],
+            lat = payload['lat'],
+            lng = payload['lng'],
             start = payload['start'],
             user = current_user.id
         )
-        print(f'This is the created model { created_sos }')
         sos_dict = model_to_dict(created_sos)
 
         return jsonify(

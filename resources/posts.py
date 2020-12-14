@@ -54,7 +54,8 @@ def create_post():
         created_post = models.Post.create(
             activity = payload['activity'],
             description = payload['description'],
-            location = payload['location'],
+            lat = payload['lat'],
+            lng = payload['lng'],
             user = current_user.id
         )
         post_dict = model_to_dict(created_post)
