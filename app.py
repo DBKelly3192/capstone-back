@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, g
+from flask import Flask, jsonify, g, render_template
 from flask_cors import CORS
 from flask_login import current_user, login_required, LoginManager
 from flask_mail import Mail, Message
@@ -47,13 +47,19 @@ CORS(sos, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.
 
 mail = Mail(app)
 
-@app.route("/email/send")
-def index():
+@app.route('/email/<id>')
+def index(id):
+    soss = [model_to_dict(sos) for sos in current_user.soss]
+    print(soss[int(id)-1])
+
+
     msg = Message(
-        "Your friend hasn't checked in!",
-        recipients = ["DavidBenjaminKelly@gmail.com"]
+        f"{ current_user.first } { current_user.last } wanted you let you know they're hitting the trail!",
+        recipients = [f"{ current_user.emergencyEmail }"]
     )
-    msg.body = "Keep your cool. The first step is to establish contact with your friend. Call, text, or visit their home/place of business. If you cannot reach your friend through these methods, you should consider reaching out to local law enforcement."
+
+    msg.html = render_template('email.html')
+
     mail.send(msg)
     return jsonify(
         data={},

@@ -6,11 +6,19 @@ import models
 
 user = Blueprint('users','user')
 
-@user.route('/register', methods=['POST'])
-def register():
+@user.route('/create', methods=['POST'])
+def create_user():
     payload = request.get_json()
-    payload['username'] = payload['username'].lower()
     payload['email'] = payload['email'].lower()
+    payload['emergencyEmail'] = payload['emergencyEmail']
+    payload['emergencyFirst'] = payload['emergencyFirst']
+    payload['emergencyLast'] = payload['emergencyLast']
+    payload['first'] = payload['first']
+    payload['last'] = payload['last']
+    payload['lat'] = payload['lat']
+    payload['lng'] = payload['lng']
+    payload['photo'] = payload['photo']
+    payload['username'] = payload['username'].lower()
 
     try:
         models.User.get(models.User.username == payload['username'])
@@ -30,9 +38,17 @@ def register():
         except models.DoesNotExist:
             pw_hash = generate_password_hash(payload['password'])
             created_user = models.User.create(
-                username=payload['username'],
                 email=payload['email'],
-                password=pw_hash
+                emergencyEmail = payload['emergencyEmail'],
+                emergencyFirst = payload['emergencyFirst'],
+                emergencyLast = payload['emergencyLast'],
+                first = payload['first'],
+                last = payload['last'],
+                lat = payload['lat'],
+                lng = payload['lng'],
+                password=pw_hash,
+                photo=payload['photo'],
+                username=payload['username']
             )
             created_user_dict = model_to_dict(created_user)
             print(created_user_dict)

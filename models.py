@@ -17,11 +17,15 @@ class BaseModel(Model):
 
 class User(BaseModel, UserMixin):
     email = CharField(unique = True)
-    emergencyEmail = CharField(default = '')
-    emergencyFirst = CharField(default = '')
-    emergencyLast = CharField(default = '')
+    emergencyEmail = CharField()
+    emergencyFirst = CharField()
+    emergencyLast = CharField()
+    first = CharField()
+    last = CharField()
+    lat = CharField()
+    lng = CharField()
     password = CharField()
-    photo = CharField(default = 'https://spee.ch/0/bcfdcd31-c004-42ed-a6f0-3d9cd67f134e.jpg')
+    photo = CharField()
     username = CharField(unique = True)
 
 class Post(BaseModel):
