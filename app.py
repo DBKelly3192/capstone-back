@@ -43,7 +43,7 @@ def load_user(user_id):
         return None
 
 # CORS(email, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
-CORS(app, origins=['https://happy-trails-app.herokuapp.com'], supports_credentials = True)
+CORS(app, origins=['*'], supports_credentials = True)
 CORS(post, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
 CORS(sos, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
 CORS(user, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
