@@ -41,32 +41,23 @@ def load_user(user_id):
     except models.DoesNotExist:
         return None
 
-# CORS(app, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
-# CORS(post, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
-# CORS(sos, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
-# CORS(user, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
-
-CORS(app, origins=['*'])
-CORS(post, origins=['*'])
-CORS(sos, origins=['*'])
-CORS(user, origins=['*'])
+CORS(app, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
+CORS(post, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
+CORS(sos, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
+CORS(user, origins=['http://localhost:3000', 'https://happy-trails-app.herokuapp.com'], supports_credentials = True)
 
 mail = Mail(app)
 
 @app.route('/email/<id>')
 def index(id):
     soss = [model_to_dict(sos) for sos in current_user.soss]
-    print(soss[int(id)-1])
-
-
-    msg = Message(
+    print(soss[int(id)-1])msg = Message(
         f"{ current_user.first } { current_user.last } wanted you let you know they're hitting the trail!",
         recipients = [f"{ current_user.emergencyEmail }"]
     )
-
     msg.html = render_template('email.html')
-
     mail.send(msg)
+
     return jsonify(
         data={},
         status={ "code": 201, "message": "success" }
